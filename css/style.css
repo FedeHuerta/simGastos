@@ -118,3 +118,9 @@ input[type="number"]::-webkit-outer-spin-button {
     overflow-y: auto;
     border-radius: 8px;
 }
+
+#seccionEliminarGasto .table-responsive {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+}

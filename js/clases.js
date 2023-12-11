@@ -17,18 +17,14 @@ class ListaGastos {
         let nombreGasto = document.getElementById("nombreGasto");
         let categoriaGasto = document.getElementById("categoriaGasto");
         let montoGasto = document.getElementById("montoGasto");
-        let mensajeValidacion = document.getElementById("mensajeValidacion");
 
         let nombre = nombreGasto.value;
         let categoria = categoriaGasto.value;
         let monto = parseFloat(montoGasto.value);
-        mensajeValidacion.textContent = "";
 
-        // VALIDACION PARA NOMBRE
+        
         if (validarEntradas(nombre, categoria, monto)) {
-            mensajeValidacion.classList.remove("ocultar", "verde");
-            mensajeValidacion.classList.add("animate__animated", "animate__fadeInDown", "rojo");
-            mensajeValidacion.textContent = "Por favor, complete todos los campos correctamente.";
+            mostrarValidacion("", "mal");
         } else {
             this.nuevoGasto = new Gasto(nombre, categoria, monto);
             this.listaDeGastos.push(this.nuevoGasto);
@@ -36,12 +32,7 @@ class ListaGastos {
             nombreGasto.value = "";
             categoriaGasto.value = "";
             montoGasto.value = "";
-            mensajeValidacion.classList.remove("ocultar", "rojo");
-            mensajeValidacion.classList.add("animate__animated", "animate__fadeInDown", "verde");
-            mensajeValidacion.textContent = "¡Gasto Agregado Correctamente!";
-            setTimeout(function () {
-                mensajeValidacion.classList.add("ocultar");
-            }, 3000);
+            mostrarValidacion("agregar", "bien");
         }
     }
 
@@ -56,84 +47,56 @@ class ListaGastos {
     }
 
     modificarGasto() {
-        const listaDeGastos = JSON.parse(localStorage.getItem("gastos")) || [];
         const tablaGastos = document.getElementById("tablaGastos");
-
         tablaGastos.innerHTML = "";
-        listaDeGastos.forEach((gasto, index) => {
+    
+        const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+    
+        gastos.forEach((gasto, index) => {
             const fila = document.createElement("tr");
-
-            const columnas = [
-                document.createElement("td"),
-                document.createElement("td"),
-                document.createElement("td"),
-                document.createElement("td")
-            ];
-
-            columnas[0].textContent = gasto.nombre;
-            columnas[1].textContent = gasto.categoria;
-            columnas[2].textContent = `$${gasto.monto.toFixed(2)}`;
-
-            const btnEditar = document.createElement("button");
-            btnEditar.textContent = "Editar";
-            btnEditar.classList.add("btn", "btn-sm", "btn-warning");
-            btnEditar.addEventListener("click", () => editarGasto(index));
-            columnas[3].appendChild(btnEditar);
-            columnas.forEach(col => fila.appendChild(col));
-
+            fila.innerHTML = `
+                <td>${gasto.nombre}</td>
+                <td>${gasto.categoria}</td>
+                <td>$${gasto.monto.toFixed(2)}</td>
+                <td>
+                    <button type="button" class="btn btn-info btn-editar" data-index="${index}">Editar</button>
+                </td>
+            `;
             tablaGastos.appendChild(fila);
+        });
+    
+        const botonesEditar = document.querySelectorAll(".btn-editar");
+        botonesEditar.forEach((boton) => {
+            boton.addEventListener("click", editarGasto);
         });
 
     }
 
 
     eliminarGasto() {
-        if (this.listaDeGastos.length === 0) {
-            alert("No hay gastos registrados.");
-            return;
-        }
-        let listaTexto = `Lista de gastos: \n`;
-        // Le muestro lista de gastos al usuario para tener los nombres a la vista
-        this.listaDeGastos.forEach(gasto => {
-            listaTexto += `Nombre: ${gasto.nombre}, Categoria: ${gasto.categoria}, Monto: ${gasto.monto} \n`;
+        const tablaEliminarGastos = document.getElementById("tablaEliminarGastos");
+        tablaEliminarGastos.innerHTML = "";
+
+        const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+
+        gastos.forEach((gasto, index) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${gasto.nombre}</td>
+                <td>${gasto.categoria}</td>
+                <td>$${gasto.monto.toFixed(2)}</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-eliminar" data-index="${index}">Eliminar</button>
+                </td>
+            `;
+            tablaEliminarGastos.appendChild(fila);
         });
 
-        let gastoAEliminar;
-        let nombreGasto;
-        do {
-            nombreGasto = prompt(`${listaTexto} \n \n` +
-                `Ingrese el nombre del gasto a eliminar o ingrese "Q" para regresar:`);
-
-            if (nombreGasto.toUpperCase() === "Q") {
-                return;
-            }
-
-            gastoAEliminar = this.listaDeGastos.find(gasto => gasto.nombre.toLowerCase() === nombreGasto.toLowerCase());
-            if (!gastoAEliminar) {
-                alert("Gasto no encontrado. Intente de nuevo.");
-            }
-        } while (!gastoAEliminar);
-
-        // Ahora que tengo el gasto a eliminar, lo saco de la lista
-        let indiceGasto = this.listaDeGastos.indexOf(gastoAEliminar);
-        this.listaDeGastos.splice(indiceGasto, 1);
-
-        alert(`Gasto "${gastoAEliminar.nombre}" eliminado con éxito.`);
-    }
-
-
-    mostrarGastos() {
-        if (this.listaDeGastos.length === 0) {
-            alert("No hay gastos registrados.");
-            return;
-        }
-        let lista = `Lista de gastos: \n`;
-        this.listaDeGastos.forEach(gasto => {
-            lista += `Nombre: ${gasto.nombre}, Categoria: ${gasto.categoria}, Monto: ${gasto.monto} \n`;
+        const botonesEliminar = document.querySelectorAll(".btn-eliminar");
+        botonesEliminar.forEach((boton) => {
+            boton.addEventListener("click", eliminarGasto);
         });
-        alert(`${lista}`);
     }
-
 
     analisisGastos() {
         if (this.listaDeGastos.length === 0) {

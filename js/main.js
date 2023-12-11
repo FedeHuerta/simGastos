@@ -5,7 +5,6 @@ let botones = {
     enviarGasto: document.getElementById("enviarGasto"),
     modificarGasto: document.getElementById("modGasto"),
     eliminarGasto: document.getElementById("eliGasto"),
-    mostrarGasto: document.getElementById("mosGasto"),
     analisisGasto: document.getElementById("anaGasto"),
     volverAlMenu: document.querySelectorAll(".volver-menu")
 }
@@ -14,7 +13,8 @@ let secciones = {
     menuPrincipal: document.getElementById("menuPrincipal"),
     seccionAgregarGasto: document.getElementById("seccionAgregarGasto"),
     seccionModificarGasto: document.getElementById("seccionModificarGasto"),
-    seccionEditarGasto: document.getElementById("seccionEditarGasto")
+    seccionEditarGasto: document.getElementById("seccionEditarGasto"),
+    seccionEliminarGasto: document.getElementById("seccionEliminarGasto")
 }
 
 botones.agregarGasto.addEventListener("click", function () {
@@ -34,13 +34,9 @@ botones.modificarGasto.addEventListener("click", function () {
 })
 
 botones.eliminarGasto.addEventListener("click", function () {
-    estadoContenido(botones.menuPrincipal, 'ocultar');
-    estadoContenido(botones.eliminarGasto, 'mostrar');
-})
-
-botones.mostrarGasto.addEventListener("click", function () {
-    estadoContenido(botones.menuPrincipal, 'ocultar');
-    estadoContenido(botones.mostrarGasto, 'mostrar');
+    estadoContenido(secciones.menuPrincipal, 'ocultar');
+    estadoContenido(secciones.seccionEliminarGasto, 'mostrar');
+    iniciar.eliminarGasto();
 })
 
 botones.analisisGasto.addEventListener("click", function () {
