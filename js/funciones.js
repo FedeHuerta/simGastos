@@ -104,16 +104,30 @@ function guardarCambios() {
     }
 }
 
-
 function eliminarGasto(event) {
     const index = event.target.dataset.index;
-    
     let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
-
     gastos.splice(index, 1);
     mostrarValidacion("eliminar", "bien");
-
     localStorage.setItem("gastos", JSON.stringify(gastos));
-
     iniciar.eliminarGasto();
+}
+
+function obtenerCategorias() {
+    const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+    const categorias = new Set();
+    gastos.forEach((gasto) => {
+        categorias.add(gasto.categoria);
+    });
+    return Array.from(categorias);
+}
+
+function calcularTotalGasto(gastos) {
+    return gastos.reduce((total, gasto) => total + gasto.monto, 0);
+}
+
+function calcularPorcentajeCategoria(gastos, categoria, totalGasto) {
+    const gastosCategoria = gastos.filter((gasto) => gasto.categoria === categoria);
+    const totalCategoria = calcularTotalGasto(gastosCategoria);
+    return Math.round((totalCategoria / totalGasto) * 100);
 }

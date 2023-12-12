@@ -14,7 +14,8 @@ let secciones = {
     seccionAgregarGasto: document.getElementById("seccionAgregarGasto"),
     seccionModificarGasto: document.getElementById("seccionModificarGasto"),
     seccionEditarGasto: document.getElementById("seccionEditarGasto"),
-    seccionEliminarGasto: document.getElementById("seccionEliminarGasto")
+    seccionEliminarGasto: document.getElementById("seccionEliminarGasto"),
+    seccionAnalisisGastos: document.getElementById("seccionAnalisisGastos")
 }
 
 botones.agregarGasto.addEventListener("click", function () {
@@ -40,8 +41,9 @@ botones.eliminarGasto.addEventListener("click", function () {
 })
 
 botones.analisisGasto.addEventListener("click", function () {
-    estadoContenido(botones.menuPrincipal, 'ocultar');
-    estadoContenido(botones.analisisGasto, 'mostrar');
+    estadoContenido(secciones.menuPrincipal, 'ocultar');
+    estadoContenido(secciones.seccionAnalisisGastos, 'mostrar');
+    iniciar.analizarGastos();
 })
 
 

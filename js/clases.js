@@ -98,40 +98,42 @@ class ListaGastos {
         });
     }
 
-    analisisGastos() {
-        if (this.listaDeGastos.length === 0) {
-            alert("No hay gastos registrados.");
-            return;
-        }
-        let contadorCategorias = {};
-        let totalMonto = 0; // Variable para almacenar el monto total gastado
-        // Cuento la cantidad total de gastos y sumo los montos
-        this.listaDeGastos.forEach(gasto => {
-            totalMonto += gasto.monto;
-
-            if (contadorCategorias[gasto.categoria]) {
-                contadorCategorias[gasto.categoria]++;
-            } else {
-                contadorCategorias[gasto.categoria] = 1;
-            }
+    analizarGastos() {
+        const tablaListaGastos = document.getElementById("tablaListaGastos");
+        tablaListaGastos.innerHTML = "";
+        const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+    
+        gastos.forEach((gasto) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${gasto.nombre}</td>
+                <td>${gasto.categoria}</td>
+                <td>$${gasto.monto.toFixed(2)}</td>
+            `;
+            tablaListaGastos.appendChild(fila);
         });
-
-        let listaTexto = `Lista de gastos: \n`;
-        // Le muestro lista de gastos al usuario para tener los nombres a la vista
-        this.listaDeGastos.forEach(gasto => {
-            listaTexto += `Nombre: ${gasto.nombre}, Categoria: ${gasto.categoria}, Monto: ${gasto.monto} \n`;
+    
+        const analisisCategorias = document.getElementById("analisisCategorias");
+        analisisCategorias.innerHTML = "";
+        const categorias = obtenerCategorias();
+        const totalGasto = calcularTotalGasto(gastos);
+        
+        categorias.forEach((categoria) => {
+            const porcentaje = calcularPorcentajeCategoria(gastos, categoria, totalGasto);
+            const divCategoria = document.createElement("div");
+            divCategoria.classList.add("mb-2", "p-2", "rounded", "categoria");
+            divCategoria.innerHTML = `
+                <p class="mb-0">${categoria}: ${porcentaje.toFixed(2)}%</p>
+            `;
+            analisisCategorias.appendChild(divCategoria);
         });
-
-        let mensaje = "\nAnálisis de Gastos por Categoría:\n";
-        for (let categoria in contadorCategorias) {
-            let porcentaje = (contadorCategorias[categoria] / this.listaDeGastos.length) * 100;
-            mensaje += `${categoria}: ${porcentaje.toFixed(2)}%\n`;
-        }
-
-        let totalGastosTexto = `\nTotal de Gastos: ${this.listaDeGastos.length}\n`; // Número total de gastos
-        let totalMontoTexto = `Total Gastado: $${totalMonto.toFixed(2)}\n`; // Monto total gastado
-
-        let listaFinal = listaTexto + mensaje + totalGastosTexto + totalMontoTexto;
-        alert(listaFinal);
+        
+        const divTotal = document.createElement("div");
+        divTotal.classList.add("mt-4", "p-2", "text-light", "rounded", "total");
+        divTotal.innerHTML = `
+            <p class="mb-0">Total de gastos: $${totalGasto.toFixed(2)}</p>
+        `;
+        analisisCategorias.appendChild(divTotal);
     }
+
 }
