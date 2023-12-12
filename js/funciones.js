@@ -1,12 +1,7 @@
 function estadoContenido(seccion, estado) {
-    if (estado === 'ocultar') {
-        seccion.classList.add("ocultar");
-    } else if (estado === 'mostrar') {
-        seccion.classList.remove("ocultar");
-        sessionStorage.setItem('seccionActual', seccion.id);
-    } else {
-        console.log("Error, la funcion estadoContenido solo recibe estado 'ocultar' o 'mostrar'");
-    }
+    estado === 'ocultar' ? seccion.classList.add("ocultar") :
+    estado === 'mostrar' ? (seccion.classList.remove("ocultar"), sessionStorage.setItem('seccionActual', seccion.id)) :
+    console.log("Error, la funcion estadoContenido solo recibe estado 'ocultar' o 'mostrar'");
 }
 
 function validarEntradas(nombre, categoria, monto) {

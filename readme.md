@@ -22,7 +22,7 @@ Este proyecto consiste en un "Gestor de Gastos" desarrollado en HTML, CSS y Java
 ## English
 # Expense manager
 
-This project is a "Expense Manager" developed in HTML, CSS, and JavaScript. It provides functionalities such as adding, modifying, deleting, and analyzing expenses, with a simple and user-friendly interface.
+This project is an "Expense Manager" developed in HTML, CSS, and JavaScript. It provides functionalities such as adding, modifying, deleting, and analyzing expenses, with a simple and user-friendly interface.
 ## Technologies Used
 
 - HTML5
