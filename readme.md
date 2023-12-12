@@ -10,6 +10,7 @@ Este proyecto consiste en un "Gestor de Gastos" desarrollado en HTML, CSS y Java
 - CSS
 - JavaScript
 - Bootstrap
+- Animate.css
 
 
 ## Caracteristicas
@@ -29,6 +30,7 @@ This project is an "Expense Manager" developed in HTML, CSS, and JavaScript. It 
 - CSS
 - JavaScript
 - Bootstrap
+- Animate.css
 
 
 ## Features

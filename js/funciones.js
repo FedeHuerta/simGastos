@@ -62,8 +62,6 @@ function editarGasto(event) {
 
     const gasto = gastos[index];
 
-
-    
     document.getElementById("nombreGastoEditar").value = gasto.nombre;
     document.getElementById("categoriaGastoEditar").value = gasto.categoria;
     document.getElementById("montoGastoEditar").value = gasto.monto;
@@ -71,7 +69,6 @@ function editarGasto(event) {
 
     estadoContenido(secciones.seccionModificarGasto, "ocultar");
     estadoContenido(secciones.seccionEditarGasto, "mostrar");
-
 }
 
 document.getElementById("guardarCambios").addEventListener("click", guardarCambios);
@@ -83,7 +80,6 @@ function guardarCambios() {
     
     const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
     const index = parseInt(document.getElementById("guardarCambios").getAttribute("data-index"), 10);
-
 
     if (validarEntradas(nombreEditado, categoriaEditada, montoEditado)) {
         mostrarValidacion("", "mal");
