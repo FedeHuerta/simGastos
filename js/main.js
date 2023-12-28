@@ -1,5 +1,8 @@
 const iniciar = new ListaGastos();
 
+obtenerTasasDeCambio();
+setInterval(obtenerTasasDeCambio, 100000);
+
 let botones = {
     agregarGasto: document.getElementById("agrGasto"),
     enviarGasto: document.getElementById("enviarGasto"),
@@ -23,7 +26,7 @@ botones.agregarGasto.addEventListener("click", function () {
     estadoContenido(secciones.seccionAgregarGasto, 'mostrar');
 })
 
-    botones.enviarGasto.addEventListener('click', function (event) {
+botones.enviarGasto.addEventListener('click', function (event) {
     event.preventDefault();
     iniciar.agregarGasto();
 });
@@ -46,13 +49,13 @@ botones.analisisGasto.addEventListener("click", function () {
     iniciar.analizarGastos();
 })
 
-
+// Busco de SessionStorage la sección en la que se encuentra el usuario y la oculto
 botones.volverAlMenu.forEach(boton => {
-    boton.addEventListener("click", function() {
+    boton.addEventListener("click", function () {
         let seccionActual = sessionStorage.getItem('seccionActual');
         if (seccionActual) {
             let elementoSeccionActual = document.getElementById(seccionActual);
-            if(elementoSeccionActual) {
+            if (elementoSeccionActual) {
                 estadoContenido(elementoSeccionActual, 'ocultar');
             }
         }

@@ -22,7 +22,7 @@ class ListaGastos {
         let categoria = categoriaGasto.value;
         let monto = parseFloat(montoGasto.value);
 
-        
+
         if (validarEntradas(nombre, categoria, monto)) {
             mostrarValidacion("", "mal");
         } else {
@@ -48,10 +48,11 @@ class ListaGastos {
 
     modificarGasto() {
         const tablaGastos = document.getElementById("tablaGastos");
-        tablaGastos.innerHTML = "";
-    
+        tablaGastos.innerHTML = ""; // Limpio los elementos para evitar duplicados al volver a llamar el método
+
         const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
-    
+
+        // Acá imprimo los gastos en la lista
         gastos.forEach((gasto, index) => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
@@ -64,7 +65,8 @@ class ListaGastos {
             `;
             tablaGastos.appendChild(fila);
         });
-    
+
+        // A cada boton de editar le agrego un evento para detectar el click
         const botonesEditar = document.querySelectorAll(".btn-editar");
         botonesEditar.forEach((boton) => {
             boton.addEventListener("click", editarGasto);
@@ -75,10 +77,11 @@ class ListaGastos {
 
     eliminarGasto() {
         const tablaEliminarGastos = document.getElementById("tablaEliminarGastos");
-        tablaEliminarGastos.innerHTML = "";
+        tablaEliminarGastos.innerHTML = ""; // Limpio los elementos para evitar duplicados al volver a llamar el método
 
         const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
 
+        // Acá imprimo los gastos en la lista
         gastos.forEach((gasto, index) => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
@@ -92,6 +95,7 @@ class ListaGastos {
             tablaEliminarGastos.appendChild(fila);
         });
 
+        // A cada boton de eliminar le agrego un evento para detectar el click
         const botonesEliminar = document.querySelectorAll(".btn-eliminar");
         botonesEliminar.forEach((boton) => {
             boton.addEventListener("click", eliminarGasto);
@@ -100,9 +104,10 @@ class ListaGastos {
 
     analizarGastos() {
         const tablaListaGastos = document.getElementById("tablaListaGastos");
-        tablaListaGastos.innerHTML = "";
+        tablaListaGastos.innerHTML = ""; // Limpio los elementos para evitar duplicados al volver a llamar el método
         const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
-    
+
+        // Acá imprimo los gastos en la lista
         gastos.forEach((gasto) => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
@@ -112,28 +117,50 @@ class ListaGastos {
             `;
             tablaListaGastos.appendChild(fila);
         });
-    
+
         const analisisCategorias = document.getElementById("analisisCategorias");
-        analisisCategorias.innerHTML = "";
+        analisisCategorias.innerHTML = ""; // Limpio los elementos para evitar duplicados al volver a llamar el método
         const categorias = obtenerCategorias();
         const totalGasto = calcularTotalGasto(gastos);
-        
-        categorias.forEach((categoria) => {
-            const porcentaje = calcularPorcentajeCategoria(gastos, categoria, totalGasto);
-            const divCategoria = document.createElement("div");
-            divCategoria.classList.add("mb-2", "p-2", "rounded", "categoria");
-            divCategoria.innerHTML = `
-                <p class="mb-0">${categoria}: ${porcentaje.toFixed(2)}%</p>
-            `;
-            analisisCategorias.appendChild(divCategoria);
+
+        // Creación del chart pie
+        const datosPie = categorias.map(categoria => ({
+            name: categoria,
+            y: calcularPorcentajeCategoria(gastos, categoria, totalGasto)
+        }));
+
+        const chartContainer = document.getElementById("analisisCategorias");
+        const width = chartContainer.offsetWidth;
+        const height = 300;
+
+        Highcharts.chart('analisisCategorias', {
+            chart: {
+                type: 'pie',
+                height: height,
+                backgroundColor: 'rgba(0, 0, 0, 0)'
+            },
+            title: {
+                text: 'Análisis de Gastos por Categoría'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.2f}%',
+                    }
+                }
+            },
+            series: [{
+                name: '%',
+                colorByPoint: true,
+                data: datosPie
+            }]
         });
-        
-        const divTotal = document.createElement("div");
-        divTotal.classList.add("mt-4", "p-2", "text-light", "rounded", "total");
-        divTotal.innerHTML = `
-            <p class="mb-0">Total de gastos: $${totalGasto.toFixed(2)}</p>
-        `;
-        analisisCategorias.appendChild(divTotal);
     }
 
 }
