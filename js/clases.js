@@ -140,7 +140,7 @@ class ListaGastos {
                 backgroundColor: 'rgba(0, 0, 0, 0)'
             },
             title: {
-                text: 'Análisis de Gastos por Categoría'
+                text: `Total de gastos: $${totalGasto}`
             },
             credits: {
                 enabled: false
