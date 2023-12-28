@@ -1,7 +1,7 @@
 ## Español 
 # Gestos de Gastos
 
-Este proyecto consiste en un "Gestor de Gastos" desarrollado en HTML, CSS y JavaScript. Proporciona funcionalidades como agregar, modificar, eliminar y analizar gastos, con una interfaz de usuario sencilla y amigable.
+Este proyecto consiste en un SPA "Gestor de Gastos" desarrollado en HTML, CSS y JavaScript. Proporciona funcionalidades como agregar, modificar, eliminar y analizar gastos, con una interfaz de usuario minimalista y amigable.
 
 
 ## Tecnologías Utilizadas
@@ -15,6 +15,7 @@ Este proyecto consiste en un "Gestor de Gastos" desarrollado en HTML, CSS y Java
 
 ## Caracteristicas
 
+- **Cotización de cambio:** Muestra la cotización del dólar, euro y el real brasileño
 - **Agregar Gasto:** Permite ingresar nuevos gastos con nombre, categoría y monto.
 - **Modificar Gasto:** Facilita la edición de gastos existentes.
 - **Eliminar Gasto:** Permite la eliminación de gastos registrados.
@@ -23,7 +24,7 @@ Este proyecto consiste en un "Gestor de Gastos" desarrollado en HTML, CSS y Java
 ## English
 # Expense manager
 
-This project is an "Expense Manager" developed in HTML, CSS, and JavaScript. It provides functionalities such as adding, modifying, deleting, and analyzing expenses, with a simple and user-friendly interface.
+This project is an SPA "Expense Manager" developed in HTML, CSS, and JavaScript. It provides functionalities such as adding, modifying, deleting, and analyzing expenses, with a minimalist and user-friendly interface.
 ## Technologies Used
 
 - HTML5
@@ -35,6 +36,7 @@ This project is an "Expense Manager" developed in HTML, CSS, and JavaScript. It 
 
 ## Features
 
+- **Exchange rates:** Shows the rates of the dollar, euro and the Brazilian real
 - **Add Expense:** Allows to register new expenses with a name, category, and amount.
 - **Modify Expense:** Facilitates the editing of existing expenses.
 - **Delete Expense:** Allows the removal of registered expenses.
