@@ -168,3 +168,15 @@ background-color: rgba(60, 75, 90, 0.699);
     display: none;
     visibility: hidden;
 }
+
+section, .safe-area {
+    padding-left:1em;
+    padding-right:1em;
+}
+
+@supports(padding:max(0px)) {
+	section {
+		padding-left:  max(1em, env(safe-area-inset-left));
+		padding-right: max(1em, env(safe-area-inset-right));
+	}
+}
