@@ -163,3 +163,8 @@ background-color: rgba(60, 75, 90, 0.699);
 #analisisCategorias {
     width: 100%;
 }
+
+#imgApp {
+    display: none;
+    visibility: hidden;
+}
